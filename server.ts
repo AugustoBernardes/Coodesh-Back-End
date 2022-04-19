@@ -1,4 +1,4 @@
-import { Request,Response, NextFunction} from "express";
+import { Request,Response, NextFunction } from "express";
 import body_parser from "body-parser";
 import "express-async-errors"
 import morgan from "morgan"
@@ -18,11 +18,11 @@ app.use(body_parser.urlencoded({ extended: false }));
 
 // Import routes
 import undefinedRoute from "./middlewares/undefinedRoute"
-import {route} from "./route"
+import ArticleRoute from "./routes/ArticleRoute"
 
 
 // Routes
-app.use("/", route)
+app.use("/", ArticleRoute)
 app.use("*",undefinedRoute)
 
 
