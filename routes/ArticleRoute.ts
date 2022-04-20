@@ -2,14 +2,18 @@ import express from "express"
 import { Request,Response } from "express";
 
 // Controllers
-import { SendDefaultMessage } from "../controllers/ArticlesController"
+import { SendDefaultMessageController, DisplayAllArticlesController,DisplaySingleArticlesController } from "../controllers/ArticlesController"
 
-const sendDefaultMessage = new SendDefaultMessage()
+const sendDefaultMessageController = new SendDefaultMessageController()
+const displayAllArticlesController = new DisplayAllArticlesController()
+const displaySingleArticlesController = new DisplaySingleArticlesController()
 
 const ArticleRoute = express.Router()
 
 
 // GET
-ArticleRoute.get('/',sendDefaultMessage.handle)
+ArticleRoute.get('/',sendDefaultMessageController.handle)
+ArticleRoute.get('/articles', displayAllArticlesController.handle)
+ArticleRoute.get('/articles/:id', displaySingleArticlesController.handle)
 
 export default ArticleRoute 

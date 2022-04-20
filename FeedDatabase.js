@@ -66,13 +66,6 @@ function FeedDB(){
             }
         }
 
-        // let all_data = await prisma.article.findMany({
-        //     include:{
-        //         events:true,
-        //         launches:true
-        //     }
-        // })
-
         console.log(`All data saved!`)
 
     })
