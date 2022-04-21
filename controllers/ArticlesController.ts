@@ -1,6 +1,6 @@
 import { Request,Response } from "express"
 
-import { DisplayAllArticlesService,DisplaySingleArticlesService } from "../services/ArticlesService"
+import { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService } from "../services/ArticlesService"
 
 class SendDefaultMessageController{
     async handle(request: Request,response:Response){
@@ -34,4 +34,21 @@ class DisplaySingleArticlesController{
     }
 }
 
-export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController }
+
+class DeleteSingleArticlesController{
+    async handle(request:Request, response:Response){
+        let { id } = request.params
+
+        let deleteSingleArticlesService = new DeleteSingleArticlesService()
+
+        let article = await deleteSingleArticlesService.execute(id)
+
+        response.json({
+            status:200,
+            message:`Article:${id} was deleted!`
+        })
+    }
+}
+
+
+export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController }

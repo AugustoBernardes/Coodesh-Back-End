@@ -2,11 +2,12 @@ import express from "express"
 import { Request,Response } from "express";
 
 // Controllers
-import { SendDefaultMessageController, DisplayAllArticlesController,DisplaySingleArticlesController } from "../controllers/ArticlesController"
+import { SendDefaultMessageController, DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController } from "../controllers/ArticlesController"
 
 const sendDefaultMessageController = new SendDefaultMessageController()
 const displayAllArticlesController = new DisplayAllArticlesController()
 const displaySingleArticlesController = new DisplaySingleArticlesController()
+const deleteSingleArticlesController = new DeleteSingleArticlesController()
 
 const ArticleRoute = express.Router()
 
@@ -15,5 +16,8 @@ const ArticleRoute = express.Router()
 ArticleRoute.get('/',sendDefaultMessageController.handle)
 ArticleRoute.get('/articles', displayAllArticlesController.handle)
 ArticleRoute.get('/articles/:id', displaySingleArticlesController.handle)
+
+// DELETE
+ArticleRoute.delete('/articles/:id', deleteSingleArticlesController.handle)
 
 export default ArticleRoute 

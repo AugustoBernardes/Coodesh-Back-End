@@ -14,8 +14,6 @@ class DisplayAllArticlesService{
     }
 }
 
-
-
 class DisplaySingleArticlesService{
     async execute(id:string){
         try {
@@ -30,11 +28,31 @@ class DisplaySingleArticlesService{
 
             return article
         } catch (error) {
-            throw new Error("Articles don't exist!");
+            throw new Error("This article don't exist!");
             
         }
-
     }
 }
 
-export { DisplayAllArticlesService,DisplaySingleArticlesService }
+
+class DeleteSingleArticlesService{
+    async execute(id:string){
+        try {
+            let article = await prisma.article.delete({
+                where:{
+                    id:id
+                },include:{
+                    events:true,
+                    launches:true
+                }
+            })
+
+            return article
+        } catch (error) {
+            throw new Error("This article don't exist!");
+            
+        }
+    }
+}
+
+export { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService }

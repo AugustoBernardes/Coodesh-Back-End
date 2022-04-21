@@ -10,8 +10,6 @@ function FeedDB(){
         
         let articles = response.data
 
-        console.log(articles.length)
-
         for (let i = 0; i < articles.length; i++){
             let article = articles[i]
 
