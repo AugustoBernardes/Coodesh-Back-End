@@ -1,6 +1,6 @@
 import { Request,Response } from "express"
-
-import { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService } from "../services/ArticlesService"
+import NewArticle from "../services/validations/ArticleValidation"
+import { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService,CreateNewArticleService } from "../services/ArticlesService"
 
 class SendDefaultMessageController{
     async handle(request: Request,response:Response){
@@ -8,6 +8,34 @@ class SendDefaultMessageController{
             status:200,
             message:"Back-end Challenge 2021 🏅 - Space Flight News"
         })
+    }
+}
+
+class CreateArticleController{
+    async handle(request: Request,response:Response){
+        let createNewArticleService = new CreateNewArticleService()
+
+        let data = NewArticle({ 
+            featured:request.body.featured,
+            title:request.body.title,
+            url:request.body.url,
+            imageUrl:request.body.imageUrl,
+            newsSite:request.body.newsSite,
+            summary:request.body.summary,
+            publishedAt:request.body.publishedAt,
+        })
+
+        if(data.error){
+            throw new Error(data.error.message);   
+        }else{
+
+            let result = await createNewArticleService.execute(request.body)
+
+            response.json({
+                status:200,
+                message:result
+            })
+        }
     }
 }
 
@@ -51,4 +79,4 @@ class DeleteSingleArticlesController{
 }
 
 
-export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController }
+export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController,CreateArticleController }
