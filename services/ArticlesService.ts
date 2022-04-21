@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-interface ICreateArticle{
+interface ICreatArticle{
     featured:boolean,
     title:string,
     url:string,
@@ -21,7 +21,7 @@ interface ICreateArticle{
 }
 
 class CreateNewArticleService{
-    async execute(article:ICreateArticle){
+    async execute(article:ICreatArticle){
 
         let saved_article = {
             featured:article.featured,
@@ -90,6 +90,97 @@ class CreateNewArticleService{
         
 }
 
+interface IUpdateArticle{
+    featured:boolean,
+    title:string,
+    url:string,
+    imageUrl:string,
+    newsSite:string,
+    summary:string,
+    publishedAt:string,
+    launches:[
+        {
+            id:string,
+            provider:string
+        }
+    ],events:[
+        {
+            id:string,
+            provider:string
+        }
+    ]
+}
+
+class UpdateArticleService{
+    async execute(article:IUpdateArticle,id:string){
+
+        try {
+            let saved_article = await prisma.article.update({
+                where:{
+                    id:id
+                },data:{
+                    featured:article.featured,
+                    title:article.title,
+                    url:article.url,
+                    imageUrl:article.imageUrl,
+                    newsSite:article.newsSite,
+                    summary:article.summary,
+                    publishedAt:article.publishedAt,
+                }
+            })
+
+            // Saving events
+            let events = article.events
+
+            for (let i = 0; i < events.length; i++){
+
+                // Validating provider data
+                try {
+                    let event = events[i]
+
+                    let saved_event = await prisma.event.update({
+                        where:{
+                            id:event.id
+                        },
+                        data:{
+                            provider:event.provider.trim(),
+                        }
+                    }) 
+                } catch (error) {
+                    
+                }
+            }
+
+            // Saving launches
+            let launches = article.launches
+
+            for (let i = 0; i < launches.length; i++){
+                // Validating provider data
+                try {
+                    let launch = launches[i]
+
+                    let saved_launch = await prisma.launch.update({
+                        where:{
+                            id:launch.id
+                        },
+                        data:{
+                            provider:launch.provider.trim(),
+                        }     
+                    }) 
+                    
+                } catch (error) {
+                    
+                }
+            }
+
+            return "Article updated!"            
+        } catch (error) {
+            throw new Error("This article don't exist!");
+            
+        } 
+    }   
+}
+
 class DisplayAllArticlesService{
     async execute(){
         let articles = await prisma.article.findMany({
@@ -144,4 +235,4 @@ class DeleteSingleArticlesService{
     }
 }
 
-export { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService,CreateNewArticleService }
+export { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService,CreateNewArticleService,UpdateArticleService }

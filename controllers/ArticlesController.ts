@@ -1,6 +1,6 @@
 import { Request,Response } from "express"
 import NewArticle from "../services/validations/ArticleValidation"
-import { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService,CreateNewArticleService } from "../services/ArticlesService"
+import { DisplayAllArticlesService,DisplaySingleArticlesService,DeleteSingleArticlesService,CreateNewArticleService,UpdateArticleService } from "../services/ArticlesService"
 
 class SendDefaultMessageController{
     async handle(request: Request,response:Response){
@@ -30,6 +30,33 @@ class CreateArticleController{
         }else{
 
             let result = await createNewArticleService.execute(request.body)
+
+            response.json({
+                status:200,
+                message:result
+            })
+        }
+    }
+}
+
+class UpdateArticleController{
+    async handle(request: Request,response:Response){
+        let updateArticleService = new UpdateArticleService()
+
+        let data = NewArticle({ 
+            featured:request.body.featured,
+            title:request.body.title,
+            url:request.body.url,
+            imageUrl:request.body.imageUrl,
+            newsSite:request.body.newsSite,
+            summary:request.body.summary,
+            publishedAt:request.body.publishedAt,
+        })
+
+        if(data.error){
+            throw new Error(data.error.message);   
+        }else{
+            let result = await updateArticleService.execute(request.body, request.params.id)
 
             response.json({
                 status:200,
@@ -79,4 +106,4 @@ class DeleteSingleArticlesController{
 }
 
 
-export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController,CreateArticleController }
+export { SendDefaultMessageController,DisplayAllArticlesController,DisplaySingleArticlesController,DeleteSingleArticlesController,CreateArticleController,UpdateArticleController }
