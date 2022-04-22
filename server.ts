@@ -18,7 +18,7 @@ const app = express();
 // Server log
 app.use(morgan('dev'));
 
-app.use(cors)
+app.use(cors())
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
