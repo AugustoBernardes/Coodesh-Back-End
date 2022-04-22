@@ -7,11 +7,14 @@
   "author": "Augusto Bernardes",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev server.ts"
+    "dev": "ts-node-dev server.ts",
+    "test": "jest --watchAll"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.12",
     "@types/morgan": "^1.9.3",
+    "@types/node-cron": "^3.0.1",
     "morgan": "^1.10.0",
     "prisma": "^3.12.0",
     "ts-node-dev": "^1.1.8",
@@ -21,10 +24,11 @@
     "@prisma/client": "^3.12.0",
     "@types/express": "^4.17.13",
     "axios": "^0.26.1",
-    "cron": "^1.8.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
-    "joi": "^17.6.0"
+    "joi": "^17.6.0",
+    "node-cron": "^3.0.0"
   }
 }

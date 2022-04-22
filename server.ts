@@ -1,8 +1,13 @@
 import { Request,Response, NextFunction } from "express";
+import cors from "cors"
 import body_parser from "body-parser";
 import "express-async-errors"
+import cron from "node-cron"
 import morgan from "morgan"
 import express from "express"
+
+// Feed data base every day
+import { FeedDB }from "./services/UpdateDataBase"
 
 // Dotenv variables
 require('dotenv').config()
@@ -13,6 +18,7 @@ const app = express();
 // Server log
 app.use(morgan('dev'));
 
+app.use(cors)
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
@@ -49,4 +55,14 @@ app.use((error:Error, request:Request, response:Response, next:NextFunction) => 
 })
 
 // Running server
-app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}!`))
+app.listen(PORT, () => {
+
+    // Schedule 
+    cron.schedule("0 9 * * *", () => {
+        console.log("Updating new data!")
+        FeedDB()
+    })
+
+    // Start server
+    console.log(`Server is running on Port: ${PORT}!`)
+})
