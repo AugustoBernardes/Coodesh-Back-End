@@ -206,7 +206,11 @@ class DisplaySingleArticlesService{
                 }
             })
 
-            return article
+            if(article == null){
+                throw new Error("This article don't exist!");
+            }else{
+                return article
+            }
         } catch (error) {
             throw new Error("This article don't exist!");
             
