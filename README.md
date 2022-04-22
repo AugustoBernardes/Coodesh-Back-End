@@ -19,6 +19,7 @@
 + To run the app use YARN dev
 + Don't forget to change the file (.env_example) to (.env )
 + On .env put all your variables 
++ Don't forget to use the command (prisma generate) to create prisma migrations, if doubt click [here](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client) to check pirsma docs
 + Server will run in localhost !
 ---
 ## Technologies Used:
