@@ -13,8 +13,8 @@
 + Used Morgan to display all API logs
 ---
 ## Observations 
-+ Video explaining the project [here]()
-+ To see Insominia routes click [here]()
++ Video explaining the project [here](https://youtu.be/meHXXHeB1KU)
++ To see Insominia routes click [here](./Insomnia_Coodesh.json)
 + To dowload the packages use NPM install or YARN 
 + To run the app use YARN dev
 + Don't forget to change the file (.env_example) to (.env )
